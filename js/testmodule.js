@@ -1,6 +1,4 @@
-ModuleLoad.define( 'js/testmodule' , ['js/testmodule2'] , function(require , exports){
-    var testmodule2 = require('js/testmodule2')
-        testmodule2.test();
+ModuleLoad.define( 'js/testmodule' , [] , function(require , exports){
     exports.test = function(){
         console.log(111)
     }

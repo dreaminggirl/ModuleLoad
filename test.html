@@ -5,14 +5,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title></title>
     <link rel="stylesheet" href="">
+
     <script src='ModuleLoad.js'></script>
+     <script src='test.js'></script>
 </head>
 <body>
-    <script type="text/javascript">
-        ModuleLoad.define( 'js/test' , ['js/testmodule'] , function(require , exports){
-            var testmodule = require('js/testmodule')
-            testmodule.test();
+<script type="text/javascript">
+        ModuleLoad.require(['js/testmodule'],function( testmodule ){
+            console.log( 333 )
         })
-    </script>
+        ModuleLoad.require(["test"],function( test ){
+            console.log( 555 )
+        })
+        
+        ModuleLoad.require(['js/testmodule2'],function( testmodule2 ){
+            console.log( 444 )
+        })
+</script>
 </body>
 </html>
