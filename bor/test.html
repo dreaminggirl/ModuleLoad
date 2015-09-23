@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <link rel="stylesheet" href="">
+    <script src='ModuleLoad.js'></script>
+</head>
+<body>
+<script type="text/javascript">
+        ModuleLoad.require(['js/testmodule','js/testmodule2'],function( testmodule , testmodule2 ){
+            testmodule.test()
+            testmodule2.test()
+
+            console.log( 'js/testmodule js/testmodule2 require 完毕' )
+        })
+        ModuleLoad.require(["../testmodle3"],function( testmodle3 ){
+            console.log( 'testmodle3 require 完毕' )
+        })
+        
+        // ModuleLoad.require(['js/testmodule2'],function( testmodule2 ){
+        //     testmodule2.test()
+        //     console.log( 'js/testmodule2 require 完毕' )
+        // })
+</script>
+</body>
+</html>

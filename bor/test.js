@@ -1,7 +1,6 @@
 ModuleLoad.define( '' , [ 'js/testmodule' , 'js/testmodule2'] , function(require , exports){
-    var testmodule = require('js/testmodule')
-    testmodule.test()
+    console.log('test被定义')
     exports.test = function(){
-        console.log(000)
+        console.log('test被require')
     }
 })
