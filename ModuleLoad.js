@@ -35,9 +35,8 @@
     var NOOP = function () {
         return true
     }
-
-    var findPath = function() {
-        var a = document.createElement('a')
+    var a = document.createElement('a')
+    var findPath = function() {      
         a.href = ''
         var p = a.href
         if ( p.indexOf( '.html' ) ) {
@@ -66,8 +65,8 @@
             script.defer = 'defer'
             script.async = 'async'
             script.type = 'text/javascript';
-            script.src = findPath() + src + '.js'   
-            head.appendChild( script )
+            script.src = findPath() + src + '.js'
+            head.appendChild( script );
     }
     var checkInReq = function( req ){
         for( var i = 0 ; i < requires.length ; i ++ ){
@@ -132,7 +131,6 @@
 
     var setModule = function( id , deps , factory ){
 
-        id = getModName()
         switch ( arguments.length ) {
             case 0 :
                 throw Error ('define(id?, deps?, factory)请输入必填参数factory')
@@ -153,11 +151,14 @@
                 deps = Array.isArray( deps ) ? deps : []
                 factory = isFunOrObj( factory ) ? factory : NOOP           
         }
+        id = getModName()
+
         if ( modules[ id ] ) {
+            modules[ id ].id = id
             modules[ id ].deps = deps
             modules[ id ].factory = factory
         } else {
-            modules[ id ] = new Module( document.currentScript.src , deps.slice() , 'undo' , deps.length , factory) 
+            modules[ id ] = new Module( id , deps.slice() , 'undo' , deps.length , factory) 
         }
         return modules[ id ]
 
@@ -170,14 +171,14 @@
                 modules[ item ].state = 'doing'
                 modules[ moduleName ].state = 'doing'
                 if ( checkInReq( item )) { return }
+                ( item.indexOf('.js') + 1 ) && ( item = item.slice( 0 , src.indexOf('.js') ) )
                 loadScript( item )
             }            
         } ) 
     }
     var defineModule = function( id , deps , factory ) {
         var module = setModule( id , deps , factory )
-        var moduleName = getModName()
-
+        var moduleName = module.id
         //依赖都加载完毕 或者不存在依赖时执行
         triggerCreate( module , moduleName )
         //加载未被加载的依赖
@@ -189,6 +190,7 @@
     var requireModule = function( arr , cbk ){
         arr.forEach( function( item , index , arr ) {
             if ( ! (item in modules) ){
+                ( item.indexOf('.js') + 1 ) && ( item = item.slice( 0 , src.indexOf('.js') ) )
                 loadScript( item )
             }
         } )
