@@ -54,7 +54,7 @@
             if ( src.match( reg ) ) {
                 return  head + src.match( reg )[1]
             }
-            path = path.slice( 0 , src.lastIndexOf( '/' ) + 1 )
+            path = path.slice(0, path.length-1).slice( 0 , path.lastIndexOf( '/' ) + 1 )
             head = '../'
         }
     }
